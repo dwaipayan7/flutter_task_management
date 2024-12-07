@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_task_management/feature/auth/pages/login_page.dart';
 
 class SignUpPage extends StatefulWidget {
+
+  static route() => MaterialPageRoute(builder: (context) => const SignUpPage());
+
   const SignUpPage({super.key});
 
   @override
@@ -39,7 +43,7 @@ class _SignUpPageState extends State<SignUpPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Sign Up.", style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),),
+              const Text("Sign Up.", style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),),
               const SizedBox(height: 15,),
 
 
@@ -63,9 +67,10 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 validator: (value){
                   if(value == null || value.trim().isEmpty
-                      || value.contains("@")){
+                      || !value.contains("@")){
                     return "Email field invalid";
                   }
+                  return null;
                 },
               ),
               const SizedBox(height: 15,),
@@ -77,7 +82,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 validator: (value){
                   if(value == null || value.trim().isEmpty
-                      || value.trim().length > 6){
+                      || value.trim().length <= 6){
                     return "Password field invalid";
                   }
                 },
@@ -95,19 +100,24 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               const SizedBox(height: 15,),
 
-              RichText(text: TextSpan(
-                text: 'Already have an account? ',
-                style: Theme.of(context).textTheme.titleMedium,
-                children: const [
-                  TextSpan(
-                    text: "Sign In",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold
-                    )
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, LoginPage.route());
+                },
+                child: RichText(text: TextSpan(
+                  text: 'Already have an account? ',
+                  style: Theme.of(context).textTheme.titleMedium,
+                  children: const [
+                    TextSpan(
+                      text: "Sign In",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold
+                      )
 
-                  )
-                ]
-              ))
+                    )
+                  ]
+                )),
+              )
 
             ],
           ),

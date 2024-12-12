@@ -1,7 +1,8 @@
 import { Router, Request, Response } from "express";
 import { db } from "../db";
-import { users } from "../db/schema";
+import { NewUser, users } from "../db/schema";
 import { eq } from "drizzle-orm";
+import bcryptjs from "bcryptjs"
 
 const authRouter = Router();
 
@@ -24,8 +25,15 @@ authRouter.post('/signup', async(req: Request<{}, {}, SignUpBody>, res: Response
          return;
        }
 
-       
+       const hashedPassword = await bcryptjs.hash(password, 8);
 
+       const newUser : NewUser ={
+        name, email, password:hashedPassword
+       }
+
+     const [user] = await db.insert(users).values(newUser).returning()
+
+       res.status(201).json(user);
         
     } catch (e) {
         res.status(500).json({error: e});

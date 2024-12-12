@@ -9,7 +9,7 @@ app.use("/auth", authRouter);
 app.use("/tasks", taskRouter);
 
 app.get("/", (req, res) => {
-  res.send("Welcome to my app!!!!!!!");
+  res.send("Dwaipayan Here");
 });
 
 app.listen(8000, () => {
